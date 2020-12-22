@@ -7,21 +7,36 @@
         type="text"
         v-model="nuevoLibro.nombre">
       <input
-        placeholder="Nombre cliente"
-        type="text"
-        v-model="nuevoLibro.nombreCliente">
+        placeholder="clienteId"
+        type="number"
+        v-model.number="nuevoLibro.clienteId">
       <button @click="agregarLibro()">Agregar libro vendido</button>
     </div>
     <table>
       <thead>
         <tr>
           <th>
+            Id
+          </th>
+          <th>
             Nombre
+          </th>
+          <th>
+            Cliente
           </th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="libro in getLibros" :key="libro.id">
+          <td>
+            {{libro.id}}
+          </td>
+          <td>
+            {{libro.nombre}}
+          </td>
+          <td>
+            {{libro.cliente.nombre}}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -35,8 +50,7 @@ export default {
   data() {
     return {
       nuevoLibro: {
-        nombre: '',
-        nombrePersona: ''
+        nombre: ''
       }
     }
   },
@@ -45,13 +59,21 @@ export default {
       'getLibros'
     ])
   },
+  mounted() {
+    this.obtenerLibros()
+  },
   methods:{
     ...mapActions([
       'llenarLibros'
     ]),
     agregarLibro() {
-      this.$axios.post('/libros', this.nuevoLibro).then(libros => {
-        this.llenarLibros(libros)
+      this.$axios.post('/libros', this.nuevoLibro).then(() => {
+        this.obtenerLibros()
+      })
+    },
+    obtenerLibros() {
+      this.$axios.get('/libros').then(response => {
+        this.llenarLibros(response.data)
       })
     }
   }

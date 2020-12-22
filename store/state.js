@@ -1,5 +1,5 @@
 export default () => ({
   mensaje: 'Hola',
-  personas: [],
+  clientes: [],
   libros: []
 })

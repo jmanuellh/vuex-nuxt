@@ -3,8 +3,8 @@ export default {
     return state.mensaje
   },
 
-  getPersonas(state) {
-    return state.personas
+  getClientes(state) {
+    return state.clientes
   },
 
   getLibros(state) {

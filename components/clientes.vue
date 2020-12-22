@@ -12,12 +12,18 @@
       <thead>
         <tr>
           <th>
+            Id
+          </th>
+          <th>
             Nombre
           </th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="cliente in getClientes" :key="cliente.id">
+          <td>
+            {{cliente.id}}
+          </td>
           <td>
             {{cliente.nombre}}
           </td>
@@ -40,7 +46,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getPersonas'
+      'getClientes'
     ])
   },
   mounted() {
@@ -50,9 +56,9 @@ export default {
     ...mapActions([
       'llenarClientes'
     ]),
-    async obtenerClientes() {
-      this.$axios.get('/clientes').then(clientes => {
-        this.llenarClientes(clientes)
+    obtenerClientes() {
+      this.$axios.get('/clientes').then(response => {
+        this.llenarClientes(response.data)
       })
     },
     agregarCliente() {
